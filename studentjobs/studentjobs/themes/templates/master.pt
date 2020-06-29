@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal">
+<head>
+
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="apple-touch-icon" sizes="180x180" href="${request.static_url_HTTPS('studentjobs:themes/images/favicon/apple-touch-icon.png')}">
+    <link rel="icon" type="image/png" sizes="32x32" href="${request.static_url_HTTPS('studentjobs:themes/images/favicon/favicon-32x32.png')}">
+    <link rel="icon" type="image/png" sizes="16x16" href="${request.static_url_HTTPS('studentjobs:themes/images/favicon/favicon-16x16.png')}">
+      
+    <tal:block metal:define-slot="title">
+        <title>Jobs - UW Oshkosh Libraries</title>
+    </tal:block>  
+    
+    <link rel="stylesheet" type="text/css" href="${request.static_url_HTTPS('studentjobs:themes/css/mobile.css')}" />
+    <link rel="stylesheet" type="text/css" href="${request.static_url_HTTPS('studentjobs:themes/css/main.css')}" />
+        
+    <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/plugins/jquery/jquery.js')}"></script>
+    <script type="text/javascript">
+        var domain = '${request.application_url}';
+    </script>
+    
+    <tal:block metal:define-slot="css" tal:content="nothing">
+       Extendable CSS Slot
+    </tal:block>  
+    <tal:block metal:define-slot="js" tal:content="nothing">
+       Extendable JS Slot
+    </tal:block> 
+  
+</head>
+
+<body>
+
+    <div id="backdrop"></div>
+    <div id="triangles"></div>
+    
+    <div id="header">
+        <h1>Student Jobs @ UW Oshkosh Libraries</h1>
+    </div>
+    <!-- <div id="slash"> -->
+        <!-- <div class="slash"></div> -->
+    <!-- </div> -->
+    
+    <div id="content" class="column">
+    <tal:block metal:define-slot="content" tal:content="nothing">
+    
+    </tal:block>  
+    </div>
+    
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<metal:page
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    use-macro="load: master.pt">
+    
+    <tal:block metal:fill-slot="css">
+    </tal:block>
+    
+    <tal:block metal:fill-slot="js">
+    </tal:block>
+    
+    <tal:block metal:fill-slot="content">
+        
+        <div id="manage-home">
+        
+            <div class="box">
+                <h2>Applications</h2>
+                <div>Open: ${application_open}</div>
+                <div>Hired: ${application_hired}</div>
+                <div>Total: ${application_total}</div>
+            </div>
+            
+            
+            <div class="box">
+                <h2>Retention</h2>
+                <div>Applications kept for ${purge_days} days</div>‬
+            </div>
+        
+            <div class="clear"></div>
+        </div>
+        
+    </tal:block>
+     
+</metal:page>

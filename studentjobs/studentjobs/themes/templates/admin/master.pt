@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <link rel="apple-touch-icon" sizes="180x180" href="${request.static_url_HTTPS('studentjobs:themes/images/favicon/apple-touch-icon.png')}">
+    <link rel="icon" type="image/png" sizes="32x32" href="${request.static_url_HTTPS('studentjobs:themes/images/favicon/favicon-32x32.png')}">
+    <link rel="icon" type="image/png" sizes="16x16" href="${request.static_url_HTTPS('studentjobs:themes/images/favicon/favicon-16x16.png')}">
+  
+    <tal:block metal:define-slot="title">
+        <title>UW Oshkosh Libraries - Student Jobs</title>
+    </tal:block>  
+    <link rel="stylesheet" type="text/css" href="${request.static_url_HTTPS('studentjobs:themes/plugins/datatables/jquery.dataTables.css')}" />
+    <link rel="stylesheet" type="text/css" href="${request.static_url_HTTPS('studentjobs:themes/plugins/jquery/jquery-ui.css')}" />
+    <link rel="stylesheet" type="text/css" href="${request.static_url_HTTPS('studentjobs:themes/css/manage.css')}" />
+    <noscript>
+        <style> 
+            .needs-js { display:none; } 
+        </style>
+    </noscript>
+  
+    <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/plugins/jquery/jquery.js')}"></script>
+    <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/plugins/cookies/jquery_cookies.js')}"></script>
+    <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/plugins/jquery/jquery-ui.js')}"></script>
+    <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/plugins/datatables/jquery.dataTables.min.js')}"></script>
+    <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/plugins/validators/jquery.currency.js')}"></script>
+    <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/js/manage.js')}"></script>
+    <script type="text/javascript">
+        var domain = '${request.application_url}';
+    </script>
+  
+    <tal:block metal:define-slot="css" tal:content="nothing">
+       Extendable CSS Slot
+    </tal:block>  
+    <tal:block metal:define-slot="js" tal:content="nothing">
+       Extendable JS Slot
+    </tal:block> 
+  
+</head>
+
+<body>
+
+
+
+    <div id="header">
+        Student Job Manager <tal:block metal:define-slot="header" tal:content="nothing" />
+    </div>
+
+    <div id="navigation">
+        <ul>
+            <li>
+                <a href="${request.application_url}/manage" title="Manage Home">Manage Home</a>
+            </li>
+            <li>
+                <a href="${request.application_url}/manage/search">Search Applications</a>
+            </li>
+            
+            <li style="margin-top: 30px;" tal:condition="request.can_admin">
+                <a href="${request.application_url}/manage/data/Config">Manage Config</a>
+            </li>
+            <li tal:condition="request.can_admin">
+                <a href="${request.application_url}/manage/data/Positions">Manage Positions</a>
+            </li>
+            <li tal:condition="request.can_admin">
+                <a href="${request.application_url}/manage/data/States">Manage States</a>
+            </li>
+            <li tal:condition="request.can_admin">
+                <a href="${request.application_url}/manage/users">Manage Users</a>
+            </li>
+            
+            <li style="margin-top: 30px;">
+                <a href="${request.application_url}">Back To Application</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div id="content">
+        <tal:block metal:define-slot="content" tal:content="nothing" />
+    </div>
+
+    
+</body>
+
+</html>

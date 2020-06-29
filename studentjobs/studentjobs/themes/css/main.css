@@ -1,0 +1,286 @@
+body {
+    background-color: #333;
+    color: #333;
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+
+.clear { clear:both; }
+.tr { text-align: right; }
+.tc { text-align: center; }
+.tl { text-align: left; }
+.vam { vertical-align: middle; }
+.vat { vertical-align: top; }
+.vab { vertical-align: bottom; }
+
+
+#backdrop {
+    z-index:0;
+    position: fixed;
+    background-image: url("../images/background1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    filter: blur(2px);
+}
+
+#triangles {
+    z-index:1;
+    position: fixed;
+    background-image: url("../images/back2.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+#header {
+    color: #222;
+    padding: 0 25px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 5;
+    text-align: right;
+    text-shadow: 2px 2px 1px white;
+}
+#header h1{
+    font-size: 40px;
+}
+
+#slash{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    overflow: hidden;
+    z-index: 1;
+}
+.slash {
+    border-left: 1500px solid transparent;
+    border-right: 1500px solid transparent;
+    border-top: 100px solid #111;
+    filter: drop-shadow(5px 5px 5px rgba(255, 255, 255, .5));
+    /* filter: drop-shadow(5px 5px 5px #111); */
+    margin-bottom: 20px;
+}
+
+#content {
+    
+    position: relative;
+    z-index: 1;
+    margin-top: 125px;
+}
+
+
+
+.section {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+h1{
+    font-size: 28px;
+}
+
+h2 {
+    color: #666;
+    font-size: 24px;
+    margin: 0 0 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+h4 {
+    color: #005fd4;
+    font-size: 16px;
+    margin: 0 0 10px 0;
+}
+
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    border: 1px solid #ccc;
+}
+
+.break {
+    clear:both;
+    height: 10px;
+}
+
+.dollar { display:inline-block; padding: 2px 2px; }
+.check-group {
+    display: inline-block;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+textarea {
+    height: 100px;
+}
+
+.final-warning {
+    font-weight: bold;
+}
+
+.final-agreement {
+    color: red;
+    font-weight: bold;
+}
+.button {
+    border: 1px solid #ccc;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+.button.green {
+    background-color: #079a07;
+    color: white;
+}
+.button.blue {
+    background-color: #005fd4;
+    color: white;
+}
+
+.time-option{
+    background-color: #72ef70;
+    display: inline-block;
+    padding: 2px 25px 2px 5px;
+    border-radius: 10px;
+    margin: 2px;
+    position: relative;
+    height: 16px;
+    vertical-align: middle;
+}
+.time-option:hover{
+    background-color: #e04545;
+    cursor: help;
+}
+
+.time-option::after{
+    background-color: #d21414;
+    content: "x";
+    position: absolute;
+    right: 0px;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+    top: 0px;
+    width: 20px;
+    vertical-align: middle;
+    font-size: 17px;
+    height: 20px;
+}
+
+.work-availability-container > div{
+    margin-bottom: 10px;
+}
+
+.work-availability-container label{
+    position: relative;
+    text-align: right;
+    width: 100px;
+}
+
+.unavailable::after {
+    content: "Unavailable";
+    position: absolute;
+    right: -85px;
+    top: 1px;
+    color: darkred;
+}
+
+#thanks {
+    text-align: center;
+}
+
+.ws-warning {
+    color: #2f070c;
+    margin-left: 10px;
+    border: 1px solid red;
+    text-decoration: none;
+    background-color: #fff0f2;
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 5px;
+    cursor: help;
+}
+
+.ws-warning:hover {
+    background-color: pink;
+}
+
+[id^="position-"],[for^="position-"] {
+    cursor: help;
+}
+
+
+/* LOGIN ===================================================================== */
+
+#issue {
+    text-align: center;
+    background-color: rgba(255, 71, 71, 0.8);
+    margin: 10px auto;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fafafa;
+    font-weight: bold;
+    width: 300px;
+}
+#login {
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 10px;
+    padding: 10px;
+    width: 275px;
+    margin: 0 auto;
+}
+#login h3{
+    padding: 0;
+    margin: 0px 5px 10px 5px;
+    border-bottom: 1px solid #ddd;
+}
+#login label{
+    font-weight: bold;
+    text-align: right;
+    margin: 0 0 5px 0;
+}
+#login .buttons{
+    text-align: center;
+}
+
+
+/* RESET ===================================================================== */
+#reset {
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 10px;
+    padding: 10px;
+    width: 350px;
+    margin: 0 auto;
+}
+#reset h3{
+    padding: 0;
+    margin: 0px 5px 10px 5px;
+    border-bottom: 1px solid #ddd;
+}
+#reset label{
+    font-weight: bold;
+    text-align: right;
+    margin: 0 0 5px 0;
+}
+#reset .buttons{
+    text-align: center;
+}

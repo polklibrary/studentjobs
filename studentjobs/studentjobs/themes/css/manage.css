@@ -1,0 +1,401 @@
+html { 
+    height: 100%;  
+    width: 100%; 
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+body { 
+    color: #333333;
+    font: 14px "Helvetica",Verdana,Lucida,Arial,sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+a, a:visited {
+    color: #0064af;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
+label {
+    font-weight: bold;
+}
+label {
+    font-weight: bold;
+}
+h2 {
+    background-color: rgba(102, 102, 102, 0.9);
+    border-bottom: 1px solid #cccccc;
+    color: white;
+    font-size: 19.5px;
+    font-weight: normal;
+    padding: 5px 10px;
+    margin: 0;
+}
+h2.heading {
+    margin: 0 0 4px 0;
+}
+.left { float: left; }
+.right { float: right; }
+.clear { clear: both; }
+.break { clear: both; margin: 10px 0 10px 0; }
+.hide { display: none; }
+.enforced_hide { display: none !important; }
+.fb { font-weight: bold; }
+.fn { font-weight: normal; }
+.tar { text-align: right; }
+.tal { text-align: left; }
+.tac { text-align: center; }
+
+.tooltip {
+    background: none;
+    background-color: #428bca;
+    color: white;
+    font-size: 12px;
+}
+
+/* BUTTONS =========================================================================================== */
+.buttons {
+    padding: 20px;
+    text-align: right;
+}
+.button {
+   background-color: #428BCA;
+   border: 1px solid #357EBD;
+   color: white;
+   cursor: pointer;
+   display: inline-block;
+   font-size: 14px;
+   font-weight: bold;    
+   margin-bottom: 2px;
+   margin-right: 10px;
+   padding: 3px 8px;
+   text-decoration: none;
+   vertical-align: middle;
+}
+.button:hover { background-color: #3276B1; border-color: #285E8E; }
+.button.green {
+    color: white;
+    background-color: #5CB85C;
+    border-color: #4CAE4C;
+}
+.button.green:hover { background-color: #47A447; border-color: #398439; }
+.button.red {
+   color: white;
+   background-color: #D9534F;
+   border-color: #D43F3A;
+}
+.button.red:hover { background-color: #D2322D; border-color: #AC2925; }
+
+.button.orange {
+   color: white;
+   background-color: #eb9316;
+   border-color: #e38d13;
+}
+.button.orange:hover { background-color: #d58512; border-color: #eb9316; }
+
+.button.purple {
+   color: white;
+   background-color: #AF5ADC;
+   border-color: #8A48AE;
+}
+.button.purple:hover { background-color: #8A48AE; border-color: #8043A1; }
+
+.button.black {
+   color: white;
+   background-color: #D9534F;
+   border-color: #D43F3A;
+}
+.button.black:hover { background-color: #D9534F; border-color: #D43F3A; animation: glow 1s ease-in-out infinite;}
+@keyframes glow {
+  50% { background-color: #111; border-color: #222; }
+}
+
+.button-pagination {
+    padding: 10px 20px;
+	text-align: center;
+}
+
+.button.next {
+	border : solid 1px #d58412;
+	border-radius : 0px 20px 20px 0px ;
+	color : #ffffff;
+	padding : 1px 17px;
+	background-color : #eb9216;
+}
+.button.prev {
+	border : solid 1px #d58412;
+	border-radius : 20px 0px 0px 20px ;
+	color : #ffffff;
+	padding : 1px 17px;
+	background-color : #eb9216;
+
+}
+
+
+/* THEME =========================================================================================== */
+#header {
+    background-color: rgba(204, 204, 204, 0.90);
+    color: #333333;
+    font-size: 18px;
+    font-weight: bold;
+    height: 25px;
+    left: 0;
+    padding: 10px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 2;
+}
+#navigation {
+    background-color: rgba(221, 221, 221, 0.9);
+    bottom: 0;
+    position: fixed;
+    top: 45px;
+    width: 200px;
+    z-index: 1;
+}
+#navigation ul {
+    height: 100%;
+    padding: 0;  
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+#navigation ul::-webkit-scrollbar {
+  display: none;
+}
+#navigation ul  li{
+    list-style: none;
+    padding: 5px 10px;
+}
+
+
+
+
+
+#content {
+    margin-top: 45px;
+    margin-left: 200px;
+    min-height: 400px;
+}
+
+
+
+#content .row{
+    background-color: rgba(238, 238, 238, 0.9);
+    padding: 10px;
+}
+
+input[type="text"] {
+    border: 1px solid #aaaaaa;
+    border-radius: 3px;
+    color: #333333;
+    padding: 2px 4px;
+}
+input:focus, select:focus {
+    box-shadow: 0 0 3px 1px #69bafc;
+}
+
+
+
+/* LANDING PAGE =========================================================================================== */
+
+#manage-home {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 20px 20px 20px;
+}
+
+#manage-home .box {
+    border: 1px solid #aaa;
+    margin: 5px;
+    width: 250px;
+}
+
+#manage-home .box>div {
+    padding: 2px 10px;
+}
+
+/* TABLE STYLE =========================================================================================== */
+
+.dt-generic-style {
+    border: 0 none;
+}
+
+.dt-generic-style thead th {
+    border-bottom: 1px solid #888888;
+}
+
+.dt-generic-style tbody tr {
+    background-color: #f8f8f8;
+    border: 1px solid #888888;
+}
+.dt-generic-style tbody tr:hover {
+    background-color:  #DCEEFF;
+    cursor: pointer;
+}
+.dt-generic-style tbody tr.no-hover:hover {
+    background-color: #f8f8f8;
+    cursor: initial;
+}
+
+.dt-generic-style tbody td:first-child {
+    border-left: 1px solid #888888;
+}
+.dt-generic-style tbody td:last-child {
+    border-right: 1px solid #888888;
+}
+
+.dt-generic-style td {
+    background-color: transparent;
+    border-bottom: 1px solid #888888;
+    text-align: center;
+}
+
+.dataTables_length{
+    float: right;
+    margin-bottom: 5px;
+}
+
+.dataTables_length label {
+    font-weight: normal;
+}
+
+.dataTables_paginate a.paginate_button.current {
+    background: #CDBFE3;
+}
+.dataTables_paginate a.paginate_button:hover {
+    background: #8C7BA6;
+    border: 1px solid #6E6084;
+}
+
+.record-issue, .record-issue > * {
+    background-color: #FFB6B6 !important;
+}
+
+
+
+
+
+/* USERS =========================================================================================== */
+#user-information input[type="text"] {
+    width: 350px;
+}
+
+#user-information input[type="text"][readonly="true"] {
+    background-color: #DFE7F3;
+    color: #444;
+    font-style: italic;
+    width: 350px;
+}
+
+#user-information .warning{
+    color: #c50606;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: bold;
+    margin: 10px;
+}
+
+/* POPUP CONTAINERS AND WINDOWS --------------------------------------------------------------------------------- */
+#backdrop {
+    background-color: #000000;
+    color: #eeeeee;
+    font-size: 18px;
+    font-weight: bold;
+    height: 10000px;
+    padding: 5px;
+    position: fixed;
+    opacity: 0.5;
+    text-align: center;
+    text-shadow: 0 0 3px #cccccc;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.popup-iframe {
+    border: 0px none;
+    box-shadow: 0px 0px 7px 3px #333333;
+    height:200px;
+    margin-left: -350px;
+    position: absolute;
+    left: 50%;
+    top: 100px;
+    width: 700px;
+    z-index: 11;
+}
+
+
+/* SEARCH ----------------------------------------------------------------- */
+#manage-search-results { display: none; padding: 10px 0px 30px 0px}
+#no-manage-search-results { display: block; text-align: center; padding: 20px 10px;}
+
+#manage-search .section {
+    background-color: rgb(239, 239, 239);
+    padding: 10px;
+}
+
+#manage-search .section:nth-child(even) {
+    background-color: rgb(255, 255, 255);
+}
+
+
+#manage-search .check-group {
+    display: inline-block;
+    font-weight: normal;
+    vertical-align: middle;
+}
+#manage-search .check-group:hover {
+    text-shadow: 1px 0 0 #333;
+}
+
+#manage-search .search-divider{
+    font-weight: bold;
+    font-style: italic;
+    font-size: 16px;
+    padding: 5px 20px;
+}
+
+#manage-search .time-picker {
+    background-color: #cccbb4;
+    padding: 5px 10px;
+    position: relative;
+    margin: 0px 0px 1px 0px;
+}
+
+#manage-search .time-picker .add-another {
+    background-color: blue;
+}
+
+#manage-search .timepicker-remove-btn {
+    position: absolute;
+    right: 0;
+    font-size: 10px;    
+}
+h3.search-availability {
+    background-color: #999ca9;
+    color: #222;
+    border-bottom: 1px solid #cccccc;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 5px 10px 3px 10px;
+    margin: 0;
+}
+
+#manage-search td>input[type="checkbox"]{
+    width: 20px;
+    height: 20px;
+}
+
+#add-timerange {
+    margin: 5px 0px;
+}
+
+::placeholder{
+    font-style: italic;
+    
+}   

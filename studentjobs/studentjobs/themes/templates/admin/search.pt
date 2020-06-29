@@ -1,0 +1,334 @@
+<metal:page
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    use-macro="load: master.pt">
+    
+    <tal:block metal:fill-slot="css">
+    </tal:block>
+    <tal:block metal:fill-slot="header">
+     - Search
+    </tal:block>
+    
+    <tal:block metal:fill-slot="js">
+        <script>
+            $(document).ready(function(){
+            
+                var results_table = null;
+                var results_callback = function(response) {
+
+                    if (results_table != null) {
+                        results_table.clear();
+                        results_table.destroy();
+                        $('#manage-search-results table tbody').html('');
+                    }
+                    
+                    var data = response.data;
+                    for(var i in data) {
+
+                        var tr = $('<tr>').attr({'data-id':data[i].id, 'title':data[i].text_preview}).click(function(e){
+                            if (!$(e.target).is('input'))
+                                window.open(window.domain + '/manage/print/' + $(this).attr('data-id'));
+                        });
+                        
+                        var hired_logic = $('<input>').attr({'type':'checkbox','data-id':data[i].id,'checked':data[i].state==2}).on('change',function(){
+                            var params = '?id=' + $(this).attr('data-id');
+                            $.get(domain + '/manage/search/hired' + params, function(response){
+                                $('#manage-search-results').find('td>input[type="checkbox"]').attr('checked',response.state==2);
+                            });
+                        });
+                        
+                        var tabledata = [
+                            $('<td>').append(data[i].id),
+                            $('<td>').append(data[i].name),
+                            $('<td>').append(data[i].email),
+                            $('<td>').append('$' + data[i].work_study_amount),
+                            $('<td>').append(data[i].local_address),
+                            $('<td>').append(data[i].home_address),
+                            $('<td>').append(data[i].expected_graduation_term + ' ' + data[i].expected_graduation_year),
+                            $('<td>').append(hired_logic),
+                        ];
+                        for(var td in tabledata)
+                            $(tr).append(tabledata[td]);
+                        
+                        $('#manage-search-results table tbody').append(tr);
+
+                    }
+                    
+                    results_table = $("#manage-search-results table").DataTable({
+                        'processing': false,
+                        'serverSide': false,
+                        'searching': false,
+                        'lengthChange': false,
+                        'pageLength': 20,
+                        'paging': true,
+                        'order': [[ 0, 'desc' ]],
+                    }); 
+                    
+                    if (data.length > 0)  {
+                        $('#manage-search-results').show();
+                        $('#no-manage-search-results').hide();
+                        window.scrollTo(0,document.body.scrollHeight); // Scroll to bottom
+                    } else {
+                        $('#manage-search-results').hide();
+                        $('#no-manage-search-results').show();
+                    }
+                }
+            
+                
+                // ON FORM SUBMISSION
+                $('#search').on('submit', function(){
+                
+                    var query = {
+                        'search.name': $('#search-name').val(),
+                        'search.email': $('#search-email').val(),
+                        'search.workstudy': $('#search-work_study').is(':checked'),
+                        'search.start_date': $('#start-date').val(),
+                        'search.positions.andor': $('select[name="search.positions.andor"]>option:selected').val(),
+                        'search.positions': '',
+                    }
+                    
+                    // Positions Query
+                    $('input[name="search.positions"]').each(function(t,i){
+                        if($(this).is(':checked')){
+                            query['search.positions'] += $(this).val() + ',';
+                        }
+                    });
+                    query['search.positions'] = query['search.positions'].substring(0, query['search.positions'].length - 1);
+                    
+                    // TIME AND DAY QUERIES
+                    $('.time-picker').each(function(i,t){   
+                    
+                        // Time Range Query
+                        var starthour = $(this).find('select[name="search.start.hour"] option:selected').val();               
+                        var startminute = $(this).find('select[name="search.start.minute"] option:selected').val();               
+                        var startampm = $(this).find('select[name="search.start.ampm"] option:selected').val();         
+                        var endhour = $(this).find('select[name="search.end.hour"] option:selected').val();               
+                        var endminute = $(this).find('select[name="search.end.minute"] option:selected').val();               
+                        var endampm = $(this).find('select[name="search.end.ampm"] option:selected').val();             
+                        var timerange = starthour + ':' + startminute + ' ' + startampm + ' - ' + endhour + ':' + endminute + ' ' + endampm;
+                        query['search.time.'+i] = timerange;
+                        
+                        // Days Query
+                        query['search.day.'+i] = ''
+                        $(this).find('input[name="search.day"]').each(function(){
+                            if($(this).is(':checked')){
+                                query['search.day.'+i] += $(this).val() + ',';
+                            }
+                        });
+                        query['search.day.'+i] = query['search.day.'+i].substring(0, query['search.day.'+i].length - 1);
+                        
+                    });
+                    
+                    // Send Query
+                    $.get(window.domain + '/manage/search/get', query, function(data){
+                        results_callback(data);
+                    });
+                    
+                    return false;
+                });
+            
+                
+                // SET DATE TO NOW
+                var now = new Date();
+                now.setDate(now.getDate() - 30);
+                var month = now.getMonth() + 1;
+                if (month < 10)
+                    month = '0' + month;
+                var day = now.getDate();
+                if (day < 10)
+                    day = '0' + day;
+                $('input[name="search.start_date"]').val(now.getFullYear() + '-' + month + '-' + day);
+                
+
+                // Add Time Range 
+                $('#add-timerange input[type="button"]').on('click', function(){
+                    $('#add-timerange').before($('.time-picker').first().clone());
+                    var div = $('<div>').html('Remove').addClass('red button timepicker-remove-btn').on('click', function(){
+                        $(this).parents('.time-picker').remove();
+                    });
+                    
+                    $('.time-picker').last().children().each(function(){
+                        if (typeof $(this).attr('for') !== 'undefined'){
+                            var ID = 'i-' + Math.floor(Math.random() * 1000000);
+                            $(this).parent().find('#' + $(this).attr('for')).attr('id', ID);
+                            $(this).attr('for', ID);
+                        }
+                    });
+                    $('.time-picker').last().append(div);
+                });
+                
+            });
+        </script>
+    </tal:block>
+    
+    <tal:block metal:fill-slot="content">
+        
+        <div id="manage-search">
+        
+            <form id="search" >
+            
+                <div class="section">
+                    <label for="search-name">Name</label>
+                    <input id="search-name" type="text" name="search.name" value="" placeholder="John or Jane Doe" />   
+                </div>
+                
+                <div class="search-divider">
+                OR
+                </div>
+                
+                <div class="section">
+                    <label for="search-email">Email</label>
+                    <input id="search-email" type="text" name="search.email" value="" placeholder="doej32@uwosh.edu" />
+                </div>
+                
+                <div class="search-divider">
+                OR
+                </div>
+                
+                <div class="section">
+                
+                    <label for="search-work_study">Work Study Required</label>
+                    <input id="search-work_study" type="checkbox" name="search.workstudy" checked="checked" />
+                    
+                    <div class="break"></div>
+                    
+                    <label for="start-date">Can Start After</label>
+                    <input id="start-date" type="date" name="search.start_date" value="2020-06-01"  min="2020-01-01" max="2030-12-31" />
+                    
+                    <div class="break"></div>
+                   
+                   
+                    <h3 class="search-availability">Availability
+                        <select name="search.availability.andor" title="How to join 'Availability' below.">
+                            <option value="and">and</option>
+                            <option value="or">or</option>
+                        </select>
+                    </h3>
+                    <div class="time-picker">
+                        <label for="search-start">From</label>
+                        <select id="search-start" name="search.start.hour">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7" selected="selected">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <select id="work-start-minute" name="search.start.minute">
+                            <option value="00">00</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                            <option value="45">45</option>
+                        </select>
+                        <select id="work-start-ampm"  name="search.start.ampm">
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                        <label for="search-end"> to </label>
+                        <select id="search-end" name="search.end.hour">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9" selected="selected">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <select id="work-end-minute" name="search.end.minute">
+                            <option value="00">00</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                            <option value="45">45</option>
+                        </select>
+                        <select id="work-end-ampm"  name="search.end.ampm">
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                        
+                        <input id="work-monday" class="check-group" type="checkbox" value="Monday" name="search.day"/>
+                        <label class="check-group" for="work-monday">Monday</label>
+                        <input id="work-tuesday" class="check-group" type="checkbox" value="Tuesday" name="search.day"//>
+                        <label class="check-group" for="work-tuesday">Tuesday</label>
+                        <input id="work-wednesday" class="check-group" type="checkbox" value="Wednesday" name="search.day"//>
+                        <label class="check-group" for="work-wednesday">Wednesday</label>
+                        <input id="work-thursday" class="check-group" type="checkbox" value="Thursday" name="search.day"//>
+                        <label class="check-group" for="work-thursday">Thursday</label>
+                        <input id="work-friday" class="check-group" type="checkbox" value="Friday" name="search.day"//>
+                        <label class="check-group" for="work-friday">Friday</label>
+                        <input id="work-saturday" class="check-group" type="checkbox" value="Saturday" name="search.day"//>
+                        <label class="check-group" for="work-saturday">Saturday</label>
+                        <input id="work-sunday" class="check-group" type="checkbox" value="Sunday" name="search.day"//>
+                        <label class="check-group" for="work-sunday">Sunday</label>
+                        
+                    </div>
+                    
+                    <div id="add-timerange" class="tar">
+                        <input class="blue button" type="button" value="Add another time range?" />
+                    </div>
+                    
+                    
+                    <div class="break"></div>
+                    
+                    <b>Location and Position</b>
+                    <select name="search.positions.andor" title="How to join 'Location and Position' options below.">
+                        <option value="or">or</option>
+                        <option value="and">and</option>
+                    </select>
+                    <div class="clear"></div>
+                    
+                    <tal:block repeat="position positions">
+                    <input id="position-${position.id}" class="check-group" type="checkbox"  name="search.positions" value="${position.name}" />
+                    <label class="check-group" for="position-${position.id}">${position.name}</label>
+                    <div class="clear"></div>
+                    </tal:block>
+                </div>
+                
+                <div class="section buttons">
+                    <input class="button green" type="submit" value="Search" name="search.submit" />
+                </div>
+            </form>
+        
+            <div class="break"></div>
+            <br />
+            <br />
+        
+            <h2>All Applications</h2>
+            <div id="manage-search-results">
+                <table id="manage-search-results-table" class="tablesorter dt-generic-style">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Work Study Amount</th>
+                            <th>Local Address</th>
+                            <th>Home Address</th>
+                            <th>Graduation Date</th>
+                            <th>Is Hired?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div id="no-manage-search-results" class="hide">
+                No results
+            </div>
+            
+            <div class="clear"></div>
+        </div>
+        
+    </tal:block>
+     
+</metal:page>

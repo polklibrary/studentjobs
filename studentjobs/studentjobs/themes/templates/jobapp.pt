@@ -1,0 +1,308 @@
+<metal:page
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    use-macro="load: master.pt">
+    
+    
+    <tal:block metal:fill-slot="js">
+    <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/js/main.js')}"></script>
+    </tal:block>
+    
+    
+    <tal:block metal:fill-slot="content">
+    
+    
+        <div id="thanks" class="section column-inner-15-30" tal:condition="completed">
+            <h2>Thank you</h2>
+            Your application has been successfully submitted. Thank you for your interest in working at UW Oshkosh Libraries. <br />  
+            We will contact you only if you are selected for a position. 
+        </div>
+    
+        <form id="application-form" action="${request.application_url}" method="post" tal:condition="not:completed"> 
+            
+            <div class="section column-inner-15-30">
+                <h2>Applicant Information</h2>
+            
+                <label for="name">Full Name</label>
+                <input id="name" class="col-50 col-t-100 col-p-100" type="text" name="applicant.name" placeholder="e.g. Jane Doe" required="true" />
+                <div class="break"></div>
+        
+                <label for="email">Email Address</label>
+                <input id="email" class="col-50 col-t-100 col-p-100" type="email" pattern=".+@uwosh.edu" name="applicant.email" placeholder="e.g. doej29@uwosh.edu" required="true" title="Only @uwosh.edu emails allowed." />
+                <div class="break"></div>
+        
+                <label for="local-address">Current City and State</label>
+                <input id="local-address" class="col-50 col-t-100 col-p-100 pattern-only-citystate" type="text" name="applicant.local_address" placeholder="e.g. Oshkosh, WI" required="true" />
+                <div class="break"></div>
+                
+                <label for="home-address">Home City and State</label>
+                <input id="home-address" class="col-50 col-t-100 col-p-100 pattern-only-citystate" type="text" name="applicant.home_address" placeholder="e.g. Green Bay, WI" required="true" />
+                <div class="break"></div>
+        
+                <label for="work-study">Work Study Award</label>
+                <select id="work-study" name="applicant.work_study">
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+                <a class="ws-warning"  target="_blank"  href="https://web-tw2p.uwosh.edu/psp/tw_prd/?cmd=login&languageCd=ENG&">Click here to verify work study.</a>
+                <div class="break"></div>
+                
+                <label for="work-study-amount">Work Study Amount</label>
+                <span class="col-2 col-t-2 col-p-2 tr vam dollar">$</span>
+                <input id="work-study-amount" class="col-10 col-t-10 col-p-10" type="number" value="0" min="0" max="10000" step="100" name="applicant.work_study_amount" />
+                <a class="ws-warning" target="_blank" href="https://web-tw2p.uwosh.edu/psp/tw_prd/?cmd=login&languageCd=ENG&">Click here to find the amount available.</a>
+                <div class="break"></div>
+        
+                <label for="graduation-term">Expected Graduation Date</label>
+                <select id="graduation-term" name="applicant.graduation_term">
+                    <option value="Fall">Fall</option>
+                    <option value="Spring">Spring</option>
+                </select>
+                <select id="graduation-year" name="applicant.graduation_year">
+                    <!-- filled by js -->
+                </select>
+                <div class="break"></div>
+                
+                
+                <div class="clear"></div>
+            </div>
+                
+            <div class="section column-inner-15-30">
+                <h2>Work Information</h2>
+                
+                <label for="work-hours-range">How many hours per week are you willing to work</label>
+                <select id="work-hours-range" name="applicant.work_hours_range">
+                    <option value="0-5">0 - 5</option>
+                    <option value="5-10">5 - 10</option>
+                    <option value="10-15">10 - 15</option>
+                    <option value="15-20">15 - 20</option>
+                    <option value="20+">20+</option>
+                </select>
+                <div class="break"></div>
+                
+                <label for="start-date">First date available to work</label>
+                <input id="start-date" type="date"  name="applicant.start_date" value="2020-06-01"  min="2020-01-01" max="2030-12-31" />
+                <div class="break"></div>
+                
+                
+                <b>Location and Position to apply for:</b>
+                <div class="clear"></div>
+                
+                <tal:block repeat="position positions">
+                <input id="position-${position.id}" class="check-group" type="checkbox"  name="applicant.positions" value="${position.name}" title="${position.title}" />
+                <label class="check-group" for="position-${position.id}" title="${position.title}">${position.name}</label>
+                <div class="clear"></div>
+                </tal:block>
+                
+                <div class="clear"></div>
+            </div>
+                
+            <div class="section column-inner-15-30">
+                <h2>References Information</h2>
+            
+                <h4>Reference One</h4>
+                <label for="reference-one-name">Full Name</label>
+                <input id="reference-one-name" class="col-50 col-t-100 col-p-100" type="text" name="reference.one.name" placeholder="e.g. John Doe" required="true"  />
+                <div class="break"></div>
+
+                <label for="reference-one-phone">Phone Number</label>
+                <input id="reference-one-phone" class="col-25 col-t-100 col-p-100" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="reference.one.phone" placeholder="e.g. 123-456-7890" required="true" />
+                <div class="break"></div>
+                
+                <label for="reference-one-acquainted">How are you acquainted?</label>
+                <input id="reference-one-acquainted" class="col-50 col-t-100 col-p-100" type="text" name="reference.one.acquainted" required="true" placeholder="e.g. Supervisor" />
+                <div class="break"></div>
+                
+                <h4>Reference Two</h4>
+                <label for="reference-two-name">Full Name</label>
+                <input id="reference-two-name" class="col-50 col-t-100 col-p-100" type="text" name="reference.two.name" placeholder="e.g. Jane Doe" />
+                <div class="break"></div>
+                
+                <label for="reference-two-phone">Phone Number</label>
+                <input id="reference-two-phone" class="col-25 col-t-100 col-p-100" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="reference.two.phone" placeholder="e.g. 123-456-7890" />
+                <div class="break"></div>
+                
+                <label for="reference-two-acquainted">How are you acquainted?</label>
+                <input id="reference-two-acquainted" class="col-50 col-t-100 col-p-100" type="text" name="reference.two.acquainted" placeholder="e.g. Coworker"/>
+                <div class="break"></div>
+                
+                <div class="clear"></div>
+            </div>
+            
+            
+            <div class="section column-inner-15-30">
+                <h2>Past Work Information</h2>
+            
+                <h4>Employer One</h4>
+                <label for="employer-one-name">Employer</label>
+                <input id="employer-one-name" class="col-50 col-t-100 col-p-100" type="text" name="employer.one.name" placeholder="e.g. KwikTrip" required="true"  />
+                <div class="break"></div>
+
+                <label for="employer-one-phone">Phone Number</label>
+                <input id="employer-one-phone" class="col-25 col-t-100 col-p-100" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="employer.one.phone" placeholder="e.g. 123-456-7890" required="true" />
+                <div class="break"></div>
+                
+                <label for="employer-one-leave">What was your position and why did you leave</label>
+                <textarea id="employer-one-leave" class="col-100 col-t-100 col-p-100" name="employer.one.leave"></textarea>
+                <div class="break"></div>
+                
+                <h4>Employer Two</h4>
+                <label for="employer-two-name">Employer</label>
+                <input id="employer-two-name" class="col-50 col-t-100 col-p-100" type="text" name="employer.two.name" placeholder="e.g. KwikTrip" required="true"  />
+                <div class="break"></div>
+
+                <label for="employer-two-phone">Phone Number</label>
+                <input id="employer-two-phone" class="col-25 col-t-100 col-p-100" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="employer.two.phone" placeholder="e.g. 123-456-7890" required="true" />
+                <div class="break"></div>
+                
+                <label for="employer-two-leave">What was your position and why did you leave</label>
+                <textarea id="employer-two-leave" class="col-100 col-t-100 col-p-100" name="employer.two.leave"></textarea>
+                <div class="break"></div>
+                
+                <div class="clear"></div>
+            </div>
+        
+            <div class="section column-inner-15-30">
+                <h2>Your Availability</h2>
+            
+                <label for="work-start-time">Add a time you can work.  You can add multiple times.</label>
+                <select id="work-start-hour">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7" selected="selected">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+                <select id="work-start-minute">
+                    <option value="00">00</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                    <option value="45">45</option>
+                </select>
+                <select id="work-start-ampm">
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                </select>
+                
+                <span> to </span>
+                
+                <select id="work-end-hour">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9" selected="selected">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+                <select id="work-end-minute">
+                    <option value="00">00</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                    <option value="45">45</option>
+                </select>
+                <select id="work-end-ampm">
+                    <option value="AM">AM</option>
+                    <option value="PM">PM</option>
+                </select>
+                <div class="break"></div>
+                <input id="work-monday" class="check-group" type="checkbox" value="Monday" />
+                <label class="check-group" for="work-monday">Monday</label>
+                <input id="work-tuesday" class="check-group" type="checkbox" value="Tuesday" />
+                <label class="check-group" for="work-tuesday">Tuesday</label>
+                <input id="work-wednesday" class="check-group" type="checkbox" value="Wednesday" />
+                <label class="check-group" for="work-wednesday">Wednesday</label>
+                <input id="work-thursday" class="check-group" type="checkbox" value="Thursday" />
+                <label class="check-group" for="work-thursday">Thursday</label>
+                <input id="work-friday" class="check-group" type="checkbox" value="Friday" />
+                <label class="check-group" for="work-friday">Friday</label>
+                <input id="work-saturday" class="check-group" type="checkbox" value="Saturday" />
+                <label class="check-group" for="work-saturday">Saturday</label>
+                <input id="work-sunday" class="check-group" type="checkbox" value="Sunday" />
+                <label class="check-group" for="work-sunday">Sunday</label>
+                
+                <div class="break"></div>
+                
+                <input id="work-add-time" type="button" class="button blue" value="Add Time" />
+                
+                
+                <div class="break"></div>
+                <h4>Your availability is:</h4>
+                <div class="work-availability-container">
+                    
+                    <div class="monday">
+                        <label class="unavailable">Monday: </label>
+                        <span class="values"></span>
+                    </div>
+                    <div class="tuesday">
+                        <label class="unavailable">Tuesday: </label>
+                        <span class="values"></span>
+                    </div>
+                    <div class="wednesday">
+                        <label class="unavailable">Wednesday: </label>
+                        <span class="values"></span>
+                    </div>
+                    <div class="thursday">
+                        <label class="unavailable">Thursday: </label>
+                        <span class="values"></span>
+                    </div>
+                    <div class="friday">
+                        <label class="unavailable">Friday: </label>
+                        <span class="values"></span>
+                    </div>
+                    <div class="saturday">
+                        <label class="unavailable">Saturday: </label>
+                        <span class="values"></span>
+                    </div>
+                    <div class="sunday">
+                        <label class="unavailable">Sunday: </label>
+                        <span class="values"></span>
+                    </div>
+                    
+                    
+                    
+                    
+                    <input type="hidden" name="availability.monday" value="" />
+                    <input type="hidden" name="availability.tuesday" value="" />
+                    <input type="hidden" name="availability.wednesday" value="" />
+                    <input type="hidden" name="availability.thursday" value="" />
+                    <input type="hidden" name="availability.friday" value="" />
+                    <input type="hidden" name="availability.saturday" value="" />
+                    <input type="hidden" name="availability.sunday" value="" />
+                    
+                </div>
+                
+                
+                <div class="clear"></div>
+            </div>
+        
+        
+            <div class="section column-inner-15 tc">
+                
+                <div class="final-warning">
+                Make sure to recheck your application before submitting. You are <u>not allowed</u> to change your application after submission.
+                </div>
+                <div class="break"></div>
+                <label for="final-check" class="check-group final-agreement" >By checking this field you are confirming your application is complete and the data you entered is accurate.</label>
+                <input id="final-check" class="check-group" type="checkbox" name="applicant.checked" required="true"/>
+                <div class="break"></div>
+                
+                <input type="submit" name="applicant.submit" class="button green" value="Submit" />
+            </div>
+        
+        </form>
+    </tal:block>
+     
+</metal:page>

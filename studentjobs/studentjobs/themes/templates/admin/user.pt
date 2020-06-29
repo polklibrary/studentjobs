@@ -1,0 +1,95 @@
+<metal:page
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    use-macro="load: master.pt">
+    
+    <tal:block metal:fill-slot="css">
+    </tal:block>
+    
+    <tal:block metal:fill-slot="js">
+        <script>
+        
+            var err_message = '${err_message}';
+            if (err_message != '')
+                alert(err_message);
+            
+            $(document).ready(function(){
+                $('.warning').each(function(i,t){
+                    $(t).addClass('warning-ready');
+                    $(t).click(function(e){
+                        var r = confirm("Are you sure?");
+                        if (!r) {
+                            e.preventDefault();
+                            return false;
+                        }
+                    });
+                });
+            });
+        
+        
+        </script>
+    </tal:block>
+    
+    <tal:block metal:fill-slot="header">
+        - Edit User
+    </tal:block>
+    
+    <tal:block metal:fill-slot="content">
+    
+        <form method="post">
+        
+            <h2>User Information</h2>
+            <div id="user-information" class="row">
+            
+
+                <label for="user-id">User ID</label> <br />
+                <input id="user-id" type="text" value="${user.id}" name="user.id" readonly="true" />
+                
+                <br />
+                <br />
+                
+                <label for="user-email">User Email</label> <br />
+                <input id="user-email" type="text" value="${user.email}" name="user.email" />
+                
+                <br />
+                <br />
+                
+                <label for="user-group">Permission Group</label> <br />
+                <select id="user-group" name="user.group">
+                    <option value="Administrator" tal:attributes="selected python:user.group=='Adminstrator'">Administrator</option>
+                    <option value="Reviewer" tal:attributes="selected python:user.group=='Reviewer'">Reviewer</option>
+                    <option value="Authenticated" tal:attributes="selected python:user.group=='Authenticated'">Authenticated</option>
+                    <option value="Anonymous" tal:attributes="selected python:user.group=='Anonymous'">Anonymous</option>
+                </select>
+                
+                <br />
+                <br />
+                
+                <label for="user-password">Update Password</label><span class="warning">(Leave blank for no change)</span> <br />
+                <input id="user-password" type="password" value="" name="user.password" />
+                
+                
+                <br />
+                <br />
+                
+                <label for="user-locked">Is User Locked?</label> <span>${is_locked}</span>
+                <input tal:condition="python:is_locked.lower()=='yes'" class="button" type="submit" value="Unlock" name="user.unlock" />
+                
+                <br />
+                <br />
+                
+
+            </div>
+           
+            
+            <div class="buttons">
+                <input class="button black warning left" type="submit" value="Delete" name="user.delete" />
+                <input class="button" type="submit" value="Save" name="user.submit" />
+                <a class="button red" href="${request.application_url}/manage/users">Cancel</a>
+            </div>
+            
+        </form>
+        
+    </tal:block>
+     
+</metal:page>

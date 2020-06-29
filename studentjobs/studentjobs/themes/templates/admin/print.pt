@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />  
+    <tal:block metal:define-slot="title">
+        <title>UW Oshkosh Libraries - Student Jobs</title>
+    </tal:block>  
+    <link rel="stylesheet" type="text/css" href="${request.static_url_HTTPS('studentjobs:themes/css/print.css')}" />
+  
+    <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/plugins/jquery/jquery.js')}"></script>
+    <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/js/manage.js')}"></script>
+    <script type="text/javascript">
+        var domain = '${request.application_url}';
+        $(document).ready(function(){
+            Formatter.auto_size_heights();
+            $('.close-box span.close').on('click', function(){
+                window.close();
+            });
+            $('.close-box span.print').on('click', function(){
+                window.print();
+            });
+        });
+    </script>
+  
+</head>
+
+<body>
+
+    <div id="manage-print" class="column">
+    
+        <div class="close-push"></div>
+        <div class="close-box">
+            <span class="close">Close</span>
+            <span class="title">Application - ${data.name}</span>
+            <span class="print">Print</span>
+        </div>
+        
+        <div class="hired" tal:condition="python:data.state==2">HIRED</div>
+        
+        <div class="c33 left">
+            <div class="inner-no-bk pat-auto-height" data-hid="a">
+                <div class="b s28">
+                    ${data.name}
+                </div>
+                <div class="b s18">
+                    ${data.email}
+                </div>
+            </div>
+        </div>
+        
+        <div class="c33 left">
+                <div class="inner pat-auto-height" data-hid="a">
+                    <div>
+                        <b>Local address:</b>
+                        ${data.local_address}
+                    </div>
+                    <div>
+                        <b>Home address:</b>
+                        ${data.home_address}
+                    </div>            
+                    <div>
+                        <b>Work study: </b>
+                        <tal:block condition="data.work_study">Yes, $${data.work_study_amount}</tal:block>
+                        <tal:block condition="not: data.work_study">No</tal:block>
+                    </div>
+                    <div>
+                        <b>Gradution: </b>
+                        ${data.expected_graduation_term} - ${data.expected_graduation_year}
+                    </div>
+                </div>
+        </div>
+        
+        <div class="c33 left">
+            <div class="">
+                <div class="inner pat-auto-height" data-hid="a">
+                    <div>
+                        <b>Can start after: </b>
+                        ${data_start_date}
+                    </div>
+                    <div>
+                        <b>Can work: </b>
+                        ${data.hours_per_week} hours a week
+                    </div>
+                    <div>
+                        <b>Position Desired: </b>
+                        <div class="position-listing"><tal:block content="structure: data_positions" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clear"></div>
+        
+        <h2>Experience</h2>
+        
+        <div class="text-pad">
+            <div class="c100">
+                <b>Library or service field experience:</b> <br />
+                ${data.service_experience}
+            </div>
+            
+            <div class="break"></div>
+            
+            <div class="c100">
+                <b>Computer or technology experience:</b> <br />
+                ${data.technology_experience}
+            </div>
+            
+            <div class="break"></div>
+                
+            <div class="c100">
+                <b>Why the library and what library skills do you possess?</b> <br />
+                ${data.library_experience}
+            </div>
+        </div>
+        <div class="break"></div>
+        
+        <h2>References and Employers</h2>
+        
+        <div class="c50 left">
+            <div>
+                <div class="inner pat-auto-height" data-hid="b">
+                    <label>Reference one:</label> 
+                    <div class="print-redacted-hide"><tal:block content="structure: data_reference_one" /></div>
+                    <div class="print-redacted-show">REDACTED</div>
+                </div>
+            </div>
+        </div>
+        <div class="c50 left">
+            <div>
+                <div class="inner pat-auto-height" data-hid="b">
+                    <label>Reference two:</label>
+                    <div class="print-redacted-hide"><tal:block content="structure: data_reference_two" /></div>
+                    <div class="print-redacted-show">REDACTED</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="clear"></div>
+        
+        <div class="c50 left">
+            <div>
+                <div class="inner pat-auto-height" data-hid="c">
+                    <label>Employer one:</label> <br />
+                    <tal:block content="structure: data_employer_one" />
+                </div>
+            </div>
+        </div>
+        <div class="c50 left">
+            <div>
+                <div class="inner pat-auto-height" data-hid="c">
+                    <label>Employer two:</label> <br />
+                    <tal:block content="structure: data_employer_two" />
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        
+        
+        <h2>Availability</h2>
+
+        <div class="availability-center">
+            <div class="c20 left">
+                <div>
+                    <div class="inner pat-auto-height" data-hid="d">
+                        <label>Monday</label> <br />
+                        <tal:block content="structure: data_monday" />
+                        <tal:block condition="not:data_monday">Not available</tal:block>
+                    </div>
+                </div>
+            </div>
+            <div class="c20 left">
+                <div>
+                    <div class="inner pat-auto-height" data-hid="d">
+                        <label>Tuesday</label> <br />
+                        <tal:block content="structure: data_tuesday" />
+                        <tal:block condition="not:data_tuesday">Not available</tal:block>
+                    </div>
+                </div>
+            </div>
+            <div class="c20 left">
+                <div>
+                    <div class="inner pat-auto-height" data-hid="d">
+                        <label>Wednesday</label> <br />
+                        <tal:block content="structure: data_wednesday" />
+                        <tal:block condition="not:data_wednesday">Not available</tal:block>
+                    </div>
+                </div>
+            </div>
+            <div class="c20 left">
+                <div>
+                    <div class="inner pat-auto-height" data-hid="d">
+                        <label>Thursday</label> <br />
+                        <tal:block content="structure: data_thursday" />
+                        <tal:block condition="not:data_thursday">Not available</tal:block>
+                    </div>
+                </div>
+            </div>
+            <div class="c20 left">
+                <div>
+                    <div class="inner pat-auto-height" data-hid="d">
+                        <label>Friday</label> <br />
+                        <tal:block content="structure: data_friday" />
+                        <tal:block condition="not:data_friday">Not available</tal:block>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="c20 left">
+                <div>
+                    <div class="inner pat-auto-height" data-hid="e">
+                        <label>Saturday</label> <br />
+                        <tal:block content="structure: data_saturday" />
+                        <tal:block condition="not:data_saturday">Not available</tal:block>
+                    </div>
+                </div>
+            </div>
+            <div class="c20 left">
+                <div>
+                    <div class="inner pat-auto-height" data-hid="e">
+                        <label>Sunday</label> <br />
+                        <tal:block content="structure: data_sunday" />
+                        <tal:block condition="not:data_sunday">Not available</tal:block>
+                    </div>
+                </div>
+            </div>
+            <div class="break"></div>
+            
+        </div>
+        
+    </div>
+    
+
+    <div class="break"></div>
+    <div id="application-id">Application ID: ${data.id}</div>
+    
+</body>
+
+</html>

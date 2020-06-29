@@ -1,0 +1,5 @@
+      [paste.app_factory]
+      main = studentjobs:main
+      [console_scripts]
+      initialize_ArchivesIndexes_db = studentjobs.scripts.initializedb:main
+      
