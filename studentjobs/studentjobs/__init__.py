@@ -30,6 +30,7 @@ def main(global_config, **settings):
     
     # Public Stuff
     config.add_route('jobapp', '/')
+    config.add_route('activity', '/activity')
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
     config.add_route('reset_password', '/reset_password')

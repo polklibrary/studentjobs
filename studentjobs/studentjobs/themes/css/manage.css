@@ -12,7 +12,7 @@ body {
     padding: 0;
 }
 
-a, a:visited {
+a {
     color: #0064af;
     text-decoration: none;
 }
