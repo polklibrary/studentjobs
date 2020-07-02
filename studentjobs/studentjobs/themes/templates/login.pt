@@ -9,17 +9,24 @@
             ${issue}
         </div>
         
-        <form id="login" method="post" action="${request.application_url}/login">
+        <form tal:condition="not: waiting_verify" id="login" method="post" action="${request.application_url}/login">
             <h3>Login</h3>
             <div>
                 <label>Email: <input type="text" name="email" value="" /></label>
                 <label>Password: <input type="password" name="pass" value="" /></label>
+                <input type="hidden" name="code" value="" />
 
                 <div class="buttons">
                     <input class="button blue" type="submit" name="submit" value="Login" />
                 </div>
             </div>
         </form>
+        
+        <div tal:condition="waiting_verify" id="verify">
+            <h3>Two Factor Authentication</h3>
+            Login successful.  A final verification link has been sent to your email.  To continue to login, please click the link in your email.
+        </div>
+        
         
     </tal:block>
      

@@ -1,7 +1,7 @@
 from sqlalchemy import Column,Integer,BigInteger,String,Unicode,Boolean,TIMESTAMP,ForeignKey,Table,Text
 from sqlalchemy.orm import relation
 from studentjobs.models import Base,DBSession,Model
-import os, transaction, datetime, time,hashlib
+import os, transaction, datetime, time, hashlib, uuid
 
 
 class Users(Base,Model):
@@ -11,6 +11,8 @@ class Users(Base,Model):
     email = Column(Unicode(25), unique=True)
     password = Column(Unicode(255))
     group = Column(Unicode(25))
+    login_quick_key = Column(Unicode(255))
+    login_quick_key_timestamp = Column(BigInteger(unsigned=True))
     password_failures = Column(Integer)
     session_timestamp = Column(BigInteger(unsigned=True))
     password_timestamp = Column(BigInteger(unsigned=True))
@@ -21,12 +23,16 @@ class Users(Base,Model):
         self.email = kwargs.get('email','')
         self.set_password(kwargs.get('password',None))
         self.group = kwargs.get('group', ACL.AUTHENTICATED)
+        self.gen_login_quick_key()
         self.update_session_timestamp()
         self.update_password_timestamp()
         self.password_history += self.password
         self.password_failures = 0
 
-
+    def gen_login_quick_key(self):
+        self.update_login_quick_key_timestamp()
+        self.login_quick_key = hashlib.sha256(str(uuid.uuid4())).hexdigest()
+        
     def check_old_passwords(self, password):
         if isinstance(password, unicode):
             password_8bit = password.encode('UTF-8')
@@ -71,7 +77,9 @@ class Users(Base,Model):
     def update_password_timestamp(self):
         self.password_timestamp = int(time.time())
         
-    
+    def update_login_quick_key_timestamp(self):
+        self.login_quick_key_timestamp = int(time.time())
+        
     
     
 class GuestUser(object):

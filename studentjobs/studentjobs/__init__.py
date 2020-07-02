@@ -32,6 +32,7 @@ def main(global_config, **settings):
     config.add_route('jobapp', '/')
     config.add_route('activity', '/activity')
     config.add_route('login', '/login')
+    config.add_route('verify', '/verify')
     config.add_route('logout', '/logout')
     config.add_route('reset_password', '/reset_password')
     
@@ -51,7 +52,7 @@ def main(global_config, **settings):
     config.add_route('manage_print', '/manage/print/{id}')
     
     
-    #config.include('pyramid_mailer') 
+    config.include('pyramid_mailer') 
     config.scan()
     return config.make_wsgi_app()
 

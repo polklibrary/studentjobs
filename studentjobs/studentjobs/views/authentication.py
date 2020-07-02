@@ -1,26 +1,30 @@
-from studentjobs.models import Users,Config
+from studentjobs.models import DBSession,Users,Config
 from studentjobs.security.acl import ACL
 from studentjobs.views import BaseView
 from studentjobs.utilities.validators import Validators
+from studentjobs.utilities.emailer import Emailer
 
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember,forget
 from pyramid.url import route_url
 from pyramid.view import view_config
 
-import time
+import time, hashlib, transaction
 
 class Login(BaseView):
 
     @view_config(route_name='login', renderer='../themes/templates/login.pt', permission=ACL.ANONYMOUS)
     def login(self):
-        self.set('issue','')
+        self.set('waiting_verify',False)
+        self.set('issue', self.request.params.get('issue',''))
         if 'submit' in self.request.params:
             email = self.request.params.get('email',None)
             password = self.request.params.get('pass',None)
             goto = self.request.params.get('goto','')
+            
             if email and password:
                 user = Users.load(email=email)
+
                 if user:
                     if user.password_failures >= int(Config.get('max_login_failures')):
                         user.password_failures += 1
@@ -31,10 +35,17 @@ class Login(BaseView):
                             return HTTPFound(location=route_url('reset_password', self.request, _query={'mandatory':'1'}))
                         if user.validate_password(password):
                             user.password_failures = 0
-                            if not goto:
-                                return HTTPFound(location=route_url('manage', self.request), headers=remember(self.request, user.id))
+                            if self.request.cookies.get('login_quick_key','0') == user.login_quick_key:
+                                if not goto:
+                                    return HTTPFound(location=route_url('manage', self.request), headers=remember(self.request, user.id))
+                                else:
+                                    return HTTPFound(location=goto, headers=remember(self.request, user.id))
                             else:
-                                return HTTPFound(location=goto, headers=remember(self.request, user.id))
+                                user.gen_login_quick_key() # make new hash
+                                self.verify_email(user)
+                                DBSession.flush()
+                                transaction.commit()
+                                self.set('waiting_verify',True)
                         else:
                             user.password_failures += 1
                             self.set('issue','Incorrect credentials')
@@ -44,12 +55,51 @@ class Login(BaseView):
                 self.set('issue','No user or password provided')
 
         return self.response
+    
+    
+    def verify_email(self, user):
+        hash = hashlib.sha256(user.login_quick_key + self.settings('hash_salt','fakesalt')).hexdigest()
+        subject = 'Student Jobs Login Verification'
+        
+        link = self.request.application_url + '/verify?id=' + str(user.id) + '&hash=' + hash
+        body = Config.get('twofactor_email_text', link)
+        body = body.replace('$LINK', link)
+        
+        Emailer.send(self.request, user.email, subject, body)
+
+
+class Verify(BaseView):
+
+    @view_config(route_name='verify', permission=ACL.ANONYMOUS)
+    def verify(self):
+        id = self.request.params.get('id',0)
+        hash = self.request.params.get('hash','')
+        if id > 0:
+            user = Users.load(id=id)
+            if user:
+                # Link timeout
+                if int(time.time()) >= (user.login_quick_key_timestamp + int(Config.get('twofactor_timeout',300))):
+                    return HTTPFound(route_url('login', self.request, _query=(('issue', 'TwoFactor link timed out.'),)), headers=forget(self.request), )
+
+                # Hash check
+                userhash = hashlib.sha256(user.login_quick_key + self.settings('hash_salt','fakesalt')).hexdigest()
+                if userhash == hash:
+                    response = HTTPFound(location=route_url('manage', self.request), headers=remember(self.request, user.id))
+                    response.set_cookie('login_quick_key', user.login_quick_key, max_age=31536000)
+                    return response
+                else:
+                    return HTTPFound(route_url('login', self.request, _query=(('issue', 'TwoFactor hash incorrect.'),)), headers=forget(self.request), )
+        
+        return HTTPFound(route_url('login', self.request, _query=(('issue', 'TwoFactor failed.'),)), headers=forget(self.request), )
+
+        
+        
         
 
 class Logout(BaseView):
 
     @view_config(route_name='logout', permission=ACL.ANONYMOUS)
-    def logout(self):
+    def logout(self):    
         return HTTPFound(route_url('jobapp', self.request), headers=forget(self.request))
       
        

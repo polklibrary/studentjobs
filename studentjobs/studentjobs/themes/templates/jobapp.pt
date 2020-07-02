@@ -39,18 +39,23 @@
                 <input id="home-address" class="col-50 col-t-100 col-p-100 pattern-only-citystate" type="text" name="applicant.home_address" placeholder="e.g. Green Bay, WI" required="true" />
                 <div class="break"></div>
         
-                <label for="work-study">Work Study Award</label>
-                <select id="work-study" name="applicant.work_study">
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-                <a class="ws-warning"  target="_blank"  href="https://web-tw2p.uwosh.edu/psp/tw_prd/?cmd=login&languageCd=ENG&">Click here to verify work study.</a>
-                <div class="break"></div>
-                
-                <label for="work-study-amount">Work Study Amount</label>
-                <span class="col-2 col-t-2 col-p-2 tr vam dollar">$</span>
-                <input id="work-study-amount" class="col-10 col-t-10 col-p-10" type="number" value="0" min="0" max="10000" step="100" name="applicant.work_study_amount" />
-                <a class="ws-warning" target="_blank" href="https://web-tw2p.uwosh.edu/psp/tw_prd/?cmd=login&languageCd=ENG&">Click here to find the amount available.</a>
+                <div class="col-40 col-t-100 col-p-100">
+                    <label for="work-study">Work Study Award</label>
+                    <select id="work-study" name="applicant.work_study">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                    <div class="break"></div>
+                    
+                    <label for="work-study-amount">Work Study Amount</label>
+                    <span class="col-2 col-t-2 col-p-2 tr vam dollar">$</span>
+                    <input id="work-study-amount" class="col-20 col-t-10 col-p-10" type="number" value="0" min="0" max="10000" step="100" name="applicant.work_study_amount" />
+                </div>
+                <div class="col-60 hide-1080">
+                    <div>
+                        <a class="ws-warning"  target="_blank"  href="https://web-tw2p.uwosh.edu/psp/tw_prd/?cmd=login&languageCd=ENG&">Please make sure you know your work study status.  If you are unsure, please click here to find your work study status.</a>
+                    </div>
+                </div>     
                 <div class="break"></div>
         
                 <label for="graduation-term">Expected Graduation Date</label>
@@ -289,18 +294,23 @@
             </div>
         
         
-            <div class="section column-inner-15 tc">
-                
-                <div class="final-warning">
-                Make sure to recheck your application before submitting. You are <u>not allowed</u> to change your application after submission.
+            <div class="clear"></div>
+            <div class="col-20">&nbsp;</div>
+            <div class="col-60">
+                <div class="section column-inner-15 tc">
+                    
+                    <div class="final-warning">
+                    Make sure to recheck your application before submitting. You are <u>not allowed</u> to change your application after submission.
+                    </div>
+                    <div class="break"></div>
+                    <label for="final-check" class="check-group final-agreement" >By checking this field you are confirming your application is complete and the information is accurate.</label>
+                    <input id="final-check" class="check-group" type="checkbox" name="applicant.checked" required="true"/>
+                    <div class="break"></div>
+                    
+                    <input type="submit" name="applicant.submit" class="button blue" value="Submit" />
                 </div>
-                <div class="break"></div>
-                <label for="final-check" class="check-group final-agreement" >By checking this field you are confirming your application is complete and the data you entered is accurate.</label>
-                <input id="final-check" class="check-group" type="checkbox" name="applicant.checked" required="true"/>
-                <div class="break"></div>
-                
-                <input type="submit" name="applicant.submit" class="button green" value="Submit" />
             </div>
+            <div class="col-20">&nbsp;</div>
         
         </form>
     </tal:block>

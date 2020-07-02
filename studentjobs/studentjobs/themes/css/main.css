@@ -117,6 +117,9 @@ label {
 input, select, textarea {
     border: 1px solid #ccc;
 }
+textarea:focus, input:focus, select:focus{
+    outline: 1px solid #777;
+}
 
 .break {
     clear:both;
@@ -141,6 +144,7 @@ textarea {
 .final-agreement {
     color: red;
     font-weight: bold;
+    display: inline;
 }
 .button {
     border: 1px solid #ccc;
@@ -209,19 +213,22 @@ textarea {
 }
 
 .ws-warning {
-    color: #2f070c;
-    margin-left: 10px;
-    border: 1px solid red;
+    color: #444;
+    border: 1px solid #9b95ef;
     text-decoration: none;
-    background-color: #fff0f2;
-    display: inline-block;
-    padding: 2px 5px;
+    background-color: #e4def7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 15px;
     border-radius: 5px;
     cursor: help;
+    width: 90%;
+    height: 50px;
 }
 
 .ws-warning:hover {
-    background-color: pink;
+    background-color: #d1c9e8;
 }
 
 [id^="position-"],[for^="position-"] {
@@ -262,6 +269,18 @@ textarea {
     text-align: center;
 }
 
+#verify {
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 10px;
+    padding: 10px;
+    width: 400px;
+    margin: 0 auto;
+}
+#verify h3{
+    padding: 0;
+    margin: 0px 5px 10px 5px;
+    border-bottom: 1px solid #ddd;
+}
 
 /* RESET ===================================================================== */
 #reset {
