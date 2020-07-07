@@ -39,6 +39,7 @@ h2 {
 
 .close-box span.close{
     background-color: #d42525;
+    border: 1px solid #bbb;
     border-radius: 1px;
     color: #fafafa;
     cursor: pointer;
@@ -51,6 +52,7 @@ h2 {
 
 .close-box span.print{
     background-color: #256bd4;
+    border: 1px solid #bbb;
     border-radius: 1px;
     color: #fafafa;
     cursor: pointer;
@@ -81,7 +83,7 @@ h2 {
     }
     .print-redacted-hide{ display: none; }
     .print-redacted-show{ display: block; font-style: italic; }
-
+    .print-hide { display: none; }
 }
 
 .left {float: left;}
@@ -141,5 +143,34 @@ h2 {
     justify-content: center;
     align-items: center;
 }
+
+.internal-box {
+    background-color: #f1f1f1;
+}
+.internal-box h2 {
+    background-color: #ddd;
+}
+
+form textarea {
+    height: 100px;
+    width: 100%;
+}
+
+form input[type="submit"]{
+    background-color: #256bd4;
+    border: 1px solid white;
+    border-radius: 1px;
+    color: #fafafa;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 2px 15px;
+    margin: 15px;    
+}
+
+
+
+
 
 

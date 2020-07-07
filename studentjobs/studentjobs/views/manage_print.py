@@ -1,6 +1,6 @@
 
 from studentjobs.security.acl import ACL
-from studentjobs.models import DBSession, Users, Applications
+from studentjobs.models import DBSession, Users, Applications, States
 from studentjobs.utilities.validators import Validators
 from studentjobs.views import BaseView
 from pyramid.view import view_config
@@ -13,6 +13,16 @@ class ManagePrint(BaseView):
     @view_config(route_name='manage_print', renderer='../themes/templates/admin/print.pt', permission=ACL.REVIEWER)
     def manage_print(self):
         id = self.request.matchdict['id']
+        
+        
+        if 'office.save' in self.request.params:
+            state = int(self.request.params.get('office.state', 1))
+            notes = self.request.params.get('office.notes', '')
+            application = Applications.load(id=id)
+            application.notes = notes
+            application.state = state
+            application.save(self.request)
+        
         obj = DBSession.query(Applications).filter(Applications.id == id).first()
         self.set('data', obj)
         start_date = str(obj.start_date)
@@ -30,6 +40,7 @@ class ManagePrint(BaseView):
         self.set('data_saturday', self.change_availability_to_readable(obj.saturday_availability))
         self.set('data_sunday', self.change_availability_to_readable(obj.sunday_availability))
         
+        self.set('states', States.loadAll())
         return self.response
         
     

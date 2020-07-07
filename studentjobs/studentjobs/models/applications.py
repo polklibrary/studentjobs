@@ -34,6 +34,7 @@ class Applications(Base,Model):
     saturday_availability = Column(Text)
     sunday_availability = Column(Text)
     state = Column(Integer)
+    notes = Column(Text)
     created = Column(BigInteger)
     
     
@@ -64,5 +65,6 @@ class Applications(Base,Model):
         self.saturday_availability = kwargs.get('saturday_availability','')
         self.sunday_availability = kwargs.get('sunday_availability','')
         self.state = kwargs.get('state',1)
+        self.notes = kwargs.get('notes','')
         self.created = long(time.time())
 

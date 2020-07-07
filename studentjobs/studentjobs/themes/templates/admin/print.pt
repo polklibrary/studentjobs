@@ -5,6 +5,9 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal">
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />  
+    <link rel="apple-touch-icon" sizes="180x180" href="${request.static_url_HTTPS('studentjobs:themes/images/favicon/apple-touch-icon.png')}">
+    <link rel="icon" type="image/png" sizes="32x32" href="${request.static_url_HTTPS('studentjobs:themes/images/favicon/favicon-32x32.png')}">
+    <link rel="icon" type="image/png" sizes="16x16" href="${request.static_url_HTTPS('studentjobs:themes/images/favicon/favicon-16x16.png')}">
     <tal:block metal:define-slot="title">
         <title>UW Oshkosh Libraries - Student Jobs</title>
     </tal:block>  
@@ -231,9 +234,33 @@
             
         </div>
         
+        
+        
+        <div class="internal-box print-hide">
+            <h2>OFFICE (INTERNAL)</h2>
+            <form method="post" class="text-pad">
+            
+                <label for="office-notes">Is Hired:</label>
+                <select name="office.state">
+                    <option tal:repeat="state states" value="${state.id}" tal:attributes="selected python:state.id==data.state">${state.name}</option>
+                </select>
+                <br />
+                <br />
+                
+                <label for="office-notes">Notes:</label>
+                <br />
+                <textarea id="office-notes" name="office.notes">${data.notes}</textarea>
+                
+                
+                <div>
+                    <input class="right button blue" type="submit" value="Save" name="office.save" />
+                    <div class="break"></div>
+                </div>
+            </form>
+        </div>
+        
     </div>
     
-
     <div class="break"></div>
     <div id="application-id">Application ID: ${data.id}</div>
     

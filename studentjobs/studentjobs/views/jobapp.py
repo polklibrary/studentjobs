@@ -10,7 +10,6 @@ class JobAppView(BaseView):
     @view_config(route_name='jobapp', renderer='../themes/templates/jobapp.pt', permission=ACL.ANONYMOUS)
     def jobapp(self):
         self.set('completed', False)
-        self.set('positions', Positions.loadAll(order='name asc'));
     
         if 'applicant.submit' in self.request.params:
             name = self.request.params.get('applicant.name','')
@@ -80,6 +79,8 @@ class JobAppView(BaseView):
             application.insert(self.request)
             self.set('completed', True)
             
+            
+        self.set('positions', Positions.loadAll(order='name asc'));
         return self.response
         
         
