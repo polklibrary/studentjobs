@@ -120,6 +120,9 @@ input, select, textarea {
 textarea:focus, input:focus, select:focus{
     outline: 1px solid #777;
 }
+.section textarea {
+    width: 100%;
+}
 
 .break {
     clear:both;

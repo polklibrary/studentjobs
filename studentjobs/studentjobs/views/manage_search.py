@@ -52,6 +52,11 @@ class ManageSearch(BaseView):
             start_date = int(re.sub('[^0-9]', '', self.request.params.get('search.start_date',0)))
             query = query.filter(Applications.start_date >= start_date)
             
+            # Address
+            address = self.request.params.get('search.address','').strip()
+            if address:
+                query = query.filter(Applications.home_address.like('%' + address + '%'))
+            
             # POSITIONS
             positions_andor = self.request.params.get('search.positions.andor','or')
             positions = self.request.params.get('search.positions','').split(',')
@@ -79,6 +84,7 @@ class ManageSearch(BaseView):
                     query = query.filter(or_(*clauses_daytime))
                 else:
                     query = query.filter(and_(*clauses_daytime))
+                
                 
         if query:
             count = query.count() # get total number of records

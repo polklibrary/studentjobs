@@ -98,6 +98,21 @@
                 <label class="check-group" for="position-${position.id}" title="${position.title}">${position.name}</label>
                 <div class="clear"></div>
                 </tal:block>
+                <div class="break"></div>
+                 
+                <label for="service-experience">Tell us about your experience in a service field?</label>
+                <textarea id="service-experience" type="date"  name="applicant.service_experience"></textarea>
+                <div class="break"></div>
+                
+                <label for="service-experience">Tell us about your computer or technology experience?</label>
+                <textarea id="service-experience" type="date"  name="applicant.tech_experience"></textarea>
+                <div class="break"></div>
+                
+                <label for="service-experience">Why do you want to work in the library and what library skills do you possess?</label>
+                <textarea id="service-experience" type="date"  name="applicant.library_assets"></textarea>
+                <div class="break"></div>
+                
+                
                 
                 <div class="clear"></div>
             </div>
@@ -107,15 +122,15 @@
             
                 <h4>Reference One</h4>
                 <label for="reference-one-name">Full name</label>
-                <input id="reference-one-name" class="col-50 col-t-100 col-p-100" type="text" name="reference.one.name" placeholder="e.g. John Doe" required="true"  />
+                <input id="reference-one-name" class="col-50 col-t-100 col-p-100" type="text" name="reference.one.name" placeholder="e.g. John Doe"  />
                 <div class="break"></div>
 
                 <label for="reference-one-phone">Phone number</label>
-                <input id="reference-one-phone" class="col-25 col-t-100 col-p-100" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="reference.one.phone" placeholder="e.g. 123-456-7890" required="true" />
+                <input id="reference-one-phone" class="col-25 col-t-100 col-p-100" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="reference.one.phone" placeholder="e.g. 123-456-7890" />
                 <div class="break"></div>
                 
                 <label for="reference-one-acquainted">How are you acquainted?</label>
-                <input id="reference-one-acquainted" class="col-50 col-t-100 col-p-100" type="text" name="reference.one.acquainted" required="true" placeholder="e.g. Supervisor" />
+                <input id="reference-one-acquainted" class="col-50 col-t-100 col-p-100" type="text" name="reference.one.acquainted" placeholder="e.g. Supervisor" />
                 <div class="break"></div>
                 
                 <h4>Reference Two</h4>
@@ -140,11 +155,11 @@
             
                 <h4>Employer One</h4>
                 <label for="employer-one-name">Employer</label>
-                <input id="employer-one-name" class="col-50 col-t-100 col-p-100" type="text" name="employer.one.name" placeholder="e.g. KwikTrip" required="true"  />
+                <input id="employer-one-name" class="col-50 col-t-100 col-p-100" type="text" name="employer.one.name" placeholder="e.g. KwikTrip" />
                 <div class="break"></div>
 
                 <label for="employer-one-phone">Phone number</label>
-                <input id="employer-one-phone" class="col-25 col-t-100 col-p-100" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="employer.one.phone" placeholder="e.g. 123-456-7890" required="true" />
+                <input id="employer-one-phone" class="col-25 col-t-100 col-p-100" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="employer.one.phone" placeholder="e.g. 123-456-7890" />
                 <div class="break"></div>
                 
                 <label for="employer-one-leave">What was your position and why did you leave?</label>
@@ -153,11 +168,11 @@
                 
                 <h4>Employer Two</h4>
                 <label for="employer-two-name">Employer</label>
-                <input id="employer-two-name" class="col-50 col-t-100 col-p-100" type="text" name="employer.two.name" placeholder="e.g. KwikTrip" required="true"  />
+                <input id="employer-two-name" class="col-50 col-t-100 col-p-100" type="text" name="employer.two.name" placeholder="e.g. KwikTrip" />
                 <div class="break"></div>
 
                 <label for="employer-two-phone">Phone number</label>
-                <input id="employer-two-phone" class="col-25 col-t-100 col-p-100" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="employer.two.phone" placeholder="e.g. 123-456-7890" required="true" />
+                <input id="employer-two-phone" class="col-25 col-t-100 col-p-100" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="employer.two.phone" placeholder="e.g. 123-456-7890" />
                 <div class="break"></div>
                 
                 <label for="employer-two-leave">What was your position and why did you leave?</label>

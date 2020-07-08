@@ -57,11 +57,14 @@
                     results_table = $("#manage-search-results table").DataTable({
                         'processing': false,
                         'serverSide': false,
-                        'searching': false,
+                        'searching': true,
                         'lengthChange': false,
                         'pageLength': 20,
                         'paging': true,
                         'order': [[ 0, 'desc' ]],
+                        'language': {
+                            'search': 'Filter:',
+                        }
                     }); 
                     
                     if (data.length > 0)  {
@@ -85,6 +88,7 @@
                         'search.start_date': $('#start-date').val(),
                         'search.positions.andor': $('select[name="search.positions.andor"]>option:selected').val(),
                         'search.positions': '',
+                        'search.address': $('#search-address').val(),
                     }
                     
                     // Positions Query
@@ -277,7 +281,6 @@
                         <input class="blue button" type="button" value="Add another time range?" />
                     </div>
                     
-                    
                     <div class="break"></div>
                     
                     <b>Location and Position</b>
@@ -292,10 +295,16 @@
                     <label class="check-group" for="position-${position.id}">${position.name}</label>
                     <div class="clear"></div>
                     </tal:block>
+                    
+                    <div class="break"></div>
+                    
+                    <b>Home Address</b>
+                    <input id="search-address" type="text" name="search.address" value="" placeholder="optional" />
+                    <div class="clear"></div>
                 </div>
                 
                 <div class="section buttons">
-                    <input class="button green" type="submit" value="Search" name="search.submit" />
+                    <input class="button green" type="submit" value="Search" name="search.submit" /> 
                 </div>
             </form>
         
