@@ -350,7 +350,8 @@ input:focus, select:focus {
     vertical-align: middle;
 }
 #manage-search .check-group:hover {
-    text-shadow: 1px 0 0 #333;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 #manage-search .search-divider{
