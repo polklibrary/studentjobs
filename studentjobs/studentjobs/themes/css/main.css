@@ -73,10 +73,19 @@ body {
 }
 
 #content {
-    
     position: relative;
     z-index: 1;
     margin-top: 125px;
+}
+
+@media (min-width: 100px) {
+    #content { margin-top: 175px; }
+}
+@media (min-width: 600px) {
+    #content { margin-top: 150px; }
+}
+@media (min-width: 1024px) {
+    #content { margin-top: 125px; }
 }
 
 

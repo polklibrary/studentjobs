@@ -10,7 +10,18 @@ class JobAppView(BaseView):
     @view_config(route_name='jobapp', renderer='../themes/templates/jobapp.pt', permission=ACL.ANONYMOUS)
     def jobapp(self):
         self.set('completed', False)
-    
+        
+        positions_data = []
+        objs = Positions.loadAll(order='name asc')
+        for obj in objs:
+            positions_data.append({
+                'id':obj.id,
+                'name':obj.name,
+                'title':obj.title,
+            })
+        self.set('positions', positions_data)
+        
+        
         if 'applicant.submit' in self.request.params:
             name = self.request.params.get('applicant.name','')
             email = self.request.params.get('applicant.email','')
@@ -80,7 +91,6 @@ class JobAppView(BaseView):
             self.set('completed', True)
             
             
-        self.set('positions', Positions.loadAll(order='name asc'));
         return self.response
         
         

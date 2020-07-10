@@ -14,8 +14,8 @@
         <title>Jobs - UW Oshkosh Libraries</title>
     </tal:block>  
     
-    <link rel="stylesheet" type="text/css" href="${request.static_url_HTTPS('studentjobs:themes/css/mobile.css')}" />
     <link rel="stylesheet" type="text/css" href="${request.static_url_HTTPS('studentjobs:themes/css/main.css')}" />
+    <link rel="stylesheet" type="text/css" href="${request.static_url_HTTPS('studentjobs:themes/css/mobile.css')}" />
         
     <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/js/security.js')}"></script>
     <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/plugins/jquery/jquery.js')}"></script>
