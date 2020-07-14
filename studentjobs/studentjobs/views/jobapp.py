@@ -89,6 +89,7 @@ class JobAppView(BaseView):
             )
             application.insert(self.request)
             self.set('completed', True)
+            print "Creating Application: " + str(email)
             
             
         return self.response

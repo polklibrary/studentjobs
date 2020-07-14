@@ -19,7 +19,6 @@
         
     <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/js/security.js')}"></script>
     <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/plugins/jquery/jquery.js')}"></script>
-    <script type="text/javascript" src="${request.static_url_HTTPS('studentjobs:themes/js/activity.js')}"></script>
     <script type="text/javascript">
         var domain = '${request.application_url}';
     </script>
