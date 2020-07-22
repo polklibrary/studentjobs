@@ -75,14 +75,13 @@ class Login(BaseView):
             # build a client
             ldap_client = ldap.initialize(self.settings('ldap.url','').strip())
             # perform a synchronous bind
+            ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_ALLOW)
             ldap_client.set_option(ldap.OPT_REFERRALS, 0)
-            ldap_client.simple_bind_s("{}@domain".format(email), password)
-            print("LDAP credentials were good!")
+            ldap_client.simple_bind_s(email, password)
             return True
             
         except ldap.INVALID_CREDENTIALS:
             ldap_client.unbind()
-            print("LDAP credentials incorrect!")
             return False
             
         except Exception as e:

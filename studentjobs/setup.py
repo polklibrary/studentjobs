@@ -19,6 +19,7 @@ requires = [
     'zope.sqlalchemy',
     'waitress',
     'requests',
+    'python-ldap',
     ]
 
 setup(name='studentjobs',
