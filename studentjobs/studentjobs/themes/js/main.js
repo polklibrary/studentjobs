@@ -12,13 +12,17 @@ var Main = {
        // this.tester();
     },
     
-    test_id : 1000000000,
-    get_test_id(){
-        Main.test_id++;
-        return Main.test_id;
-    },
+    make_random_str : function(l) {
+       var result           = '';
+       var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz ';
+       var charactersLength = characters.length;
+       for ( var i = 0; i < l; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+       }
+       return result;
+    }, 
     
-    tester : function(){
+    fill_test_data : function(){
         
         $('input').each(function(){
             if ($(this).attr('type') == 'checkbox')
@@ -32,10 +36,10 @@ var Main = {
             else if ($(this).attr('type') == 'number')
                 $(this).val(1000);
             else if ($(this).attr('type') == 'text')
-                $(this).val(Main.get_test_id());
+                $(this).val(Main.make_random_str(15));
         });
         $('textarea').each(function(){
-            $(this).val(Main.get_test_id());
+            $(this).val(Main.make_random_str(128));
         });
         // $('select').each(function(){
             // $(this).find('option:nth-child(1)').prop('selected', true);
@@ -97,9 +101,7 @@ var Main = {
     
     
     id_counter : 0,
-    set_availability : function(){
-        console.log('set_availability ready');
-        
+    set_availability : function(){        
         
         $('#work-add-time').on('click', function(){
             //var new_id = Main.id_counter;

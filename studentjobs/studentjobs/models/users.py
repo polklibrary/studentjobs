@@ -6,8 +6,12 @@ import os, transaction, datetime, time, hashlib, uuid
 
 class Users(Base,Model):
     __tablename__ = 'users'
+    
+    AUTH_LOCAL = 0
+    AUTH_LDAP = 1
 
     id = Column(Integer, primary_key=True)
+    auth_type = Column(Integer)
     email = Column(Unicode(25), unique=True)
     password = Column(Unicode(255))
     group = Column(Unicode(25))
@@ -20,6 +24,7 @@ class Users(Base,Model):
     
     def __init__(self, **kwargs):
         from studentjobs.security.acl import ACL
+        self.auth_type = kwargs.get('auth_type', self.AUTH_LOCAL)
         self.email = kwargs.get('email','')
         self.set_password(kwargs.get('password',None))
         self.group = kwargs.get('group', ACL.AUTHENTICATED)

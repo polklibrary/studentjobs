@@ -65,10 +65,17 @@
                 <br />
                 <br />
                 
-                <label for="user-password">Update Password</label><span class="warning">(Leave blank for no change)</span> <br />
+                <label for="user-auth">Authentication Type</label> <br />
+                <select id="user-auth" name="user.auth_type">
+                    <option value="0" tal:attributes="selected python:user.auth_type==0">Local</option>
+                    <option value="1" tal:attributes="selected python:user.auth_type==1">LDAP</option>
+                </select>
+                
+                <br />
+                <br />
+                
+                <label for="user-password">Update Local Password</label><span class="warning">(Leave blank for no change)</span> <br />
                 <input id="user-password" type="password" value="" name="user.password" />
-                
-                
                 <br />
                 <br />
                 

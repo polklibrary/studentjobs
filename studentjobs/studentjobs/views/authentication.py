@@ -9,7 +9,7 @@ from pyramid.security import remember,forget
 from pyramid.url import route_url
 from pyramid.view import view_config
 
-import time, hashlib, transaction
+import time, hashlib, transaction, ldap
 
 class Login(BaseView):
 
@@ -26,35 +26,68 @@ class Login(BaseView):
                 user = Users.load(email=email)
 
                 if user:
-                    if user.password_failures >= int(Config.get('max_login_failures')):
-                        user.password_failures += 1
-                        self.set('issue','Your account is locked out.  Please contact your administrator.')
-                    else:
-                        now = (int(time.time())) - int(Config.get('password_mandatory_reset'))
-                        if user.password_timestamp < now:
-                            return HTTPFound(location=route_url('reset_password', self.request, _query={'mandatory':'1'}))
-                        if user.validate_password(password):
-                            user.password_failures = 0
-                            if self.request.cookies.get('login_quick_key','0') == user.login_quick_key:
-                                if not goto:
-                                    return HTTPFound(location=route_url('manage', self.request), headers=remember(self.request, user.id))
-                                else:
-                                    return HTTPFound(location=goto, headers=remember(self.request, user.id))
-                            else:
-                                user.gen_login_quick_key() # make new hash
-                                self.verify_email(user)
-                                DBSession.flush()
-                                transaction.commit()
-                                self.set('waiting_verify',True)
+                
+                    # Check against LDAP
+                    if user.auth_type == Users.AUTH_LDAP:
+                        if self.ldap_connect_and_check():
+                            return HTTPFound(location=route_url('manage', self.request), headers=remember(self.request, user.id))
                         else:
+                            self.set('issue','Incorrect credentials (Error=0A)')
+                            
+                    # Check against LOCAL
+                    elif user.auth_type == Users.AUTH_LOCAL:
+                        if user.password_failures >= int(Config.get('max_login_failures')):
                             user.password_failures += 1
-                            self.set('issue','Incorrect credentials')
+                            self.set('issue','Your account is locked out.  Please contact your administrator.')
+                        else:
+                            now = (int(time.time())) - int(Config.get('password_mandatory_reset'))
+                            if user.password_timestamp < now:
+                                return HTTPFound(location=route_url('reset_password', self.request, _query={'mandatory':'1'}))
+                            if user.validate_password(password):
+                                user.password_failures = 0
+                                if self.request.cookies.get('login_quick_key','0') == user.login_quick_key:
+                                    if not goto:
+                                        return HTTPFound(location=route_url('manage', self.request), headers=remember(self.request, user.id))
+                                    else:
+                                        return HTTPFound(location=goto, headers=remember(self.request, user.id))
+                                else:
+                                    user.gen_login_quick_key() # make new hash
+                                    self.verify_email(user)
+                                    DBSession.flush()
+                                    transaction.commit()
+                                    self.set('waiting_verify',True)
+                            else:
+                                user.password_failures += 1
+                                self.set('issue','Incorrect credentials (Error=0B)')
                 else:
                     self.set('issue','No user found')
             else:
                 self.set('issue','No user or password provided')
 
         return self.response
+    
+    
+    def ldap_connect_and_check(self):
+        try:
+            email = self.request.params.get('email','')
+            password = self.request.params.get('pass','')
+            
+            # build a client
+            ldap_client = ldap.initialize(self.settings('ldap.url','').strip())
+            # perform a synchronous bind
+            ldap_client.set_option(ldap.OPT_REFERRALS, 0)
+            ldap_client.simple_bind_s("{}@domain".format(email), password)
+            print("LDAP credentials were good!")
+            return True
+            
+        except ldap.INVALID_CREDENTIALS:
+            ldap_client.unbind()
+            print("LDAP credentials incorrect!")
+            return False
+            
+        except Exception as e:
+            print "LDAP Error: " + str(e)
+            return False
     
     
     def verify_email(self, user):

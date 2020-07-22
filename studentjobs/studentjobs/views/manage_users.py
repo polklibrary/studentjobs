@@ -28,6 +28,7 @@ class ManageUsersAdd(BaseView):
             email = Validators.sanatize(self.request.params.get('user.email',''))
             group = self.request.params.get('user.group','')
             password = Validators.sanatize(self.request.params.get('user.password',''))
+            auth_type = int(self.request.params.get('user.auth_type',Users.AUTH_LOCAL))
             
             if not Validators.email(email):
                 self.set('err_message', 'Invalid email')
@@ -37,10 +38,8 @@ class ManageUsersAdd(BaseView):
             
             if not Validators.password(password, Config):
                 self.set('err_message', 'Invalid Password')
-            elif user.check_old_passwords(password):
-                self.set('err_message', 'Already used password')
                 
-            user = Users(email=email, password=password, group=group)
+            user = Users(email=email, password=password, group=group, auth_type=auth_type)
             user.insert(self.request)
             
             return HTTPFound(location=route_url('manage_users', self.request))
@@ -61,6 +60,9 @@ class ManageUser(BaseView):
             email = Validators.sanatize(self.request.params.get('user.email',''))
             group = self.request.params.get('user.group','')
             password = Validators.sanatize(self.request.params.get('user.password',''))
+            auth_type = int(self.request.params.get('user.auth_type',Users.AUTH_LOCAL))
+            
+            user.auth_type = auth_type
             
             if not Validators.email(email):
                 self.set('err_message', 'Invalid email')
@@ -72,16 +74,18 @@ class ManageUser(BaseView):
             else:
                 user.group = group
             
-            if password == '':
-                pass
-            elif not Validators.password(password, Config):
-                self.set('err_message', 'Invalid Password')
-            elif user.check_old_passwords(password):
-                self.set('err_message', 'Already used password')
-            else:
-                user.set_password(password)
-                user.update_password_timestamp()
-                
+            if auth_type == Users.AUTH_LOCAL:
+                if password == '':
+                    pass
+                elif not Validators.password(password, Config):
+                    self.set('err_message', 'Invalid Password')
+                elif user.check_old_passwords(password):
+                    self.set('err_message', 'Already used password')
+                else:
+                    user.set_password(password)
+                    user.update_password_timestamp()
+                    
+                    
             user.save(self.request)
             
         if 'user.unlock' in self.request.params:

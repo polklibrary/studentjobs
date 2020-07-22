@@ -46,6 +46,15 @@
                     <option value="Authenticated" selected="true">Authenticated</option>
                     <option value="Anonymous">Anonymous</option>
                 </select>
+                
+                <br />
+                <br />
+                
+                <label for="user-auth">Authentication Type</label> <br />
+                <select id="user-auth" name="user.auth_type">
+                    <option value="0">Local</option>
+                    <option value="1">LDAP</option>
+                </select>
             </div>
            
             
