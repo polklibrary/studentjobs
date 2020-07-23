@@ -17,6 +17,11 @@ class ManageUsers(BaseView):
         self.set('users', Users.loadAll(order='id asc'))
         return self.response
         
+    def get_auth_type(self, id):
+        if id == Users.AUTH_LDAP:
+            return "LDAP"
+        return "Local"
+        
         
 class ManageUsersAdd(BaseView):
 
