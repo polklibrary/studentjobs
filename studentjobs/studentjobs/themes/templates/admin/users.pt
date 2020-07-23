@@ -54,7 +54,7 @@
                     <tr tal:repeat="user users" data-id="${user.id}">
                         <td>${user.id}</td>
                         <td>${user.email}</td>
-                        <td>${user.auth_type}</td>
+                        <td>${view.get_auth_type(user.auth_type)}</td>
                         <td>${user.group}</td>
                     </tr>
                 </tbody>
