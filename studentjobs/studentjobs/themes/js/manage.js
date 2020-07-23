@@ -1,3 +1,20 @@
+var Themer = {
+    
+    Backgrounds : [
+        '1.jpg',
+        '2.jpg',
+        '3.jpg',
+        '4.jpg',
+        '5.jpg',
+    ],
+    
+    init : function(){
+        var bk = this.Backgrounds[Math.floor(Math.random()*this.Backgrounds.length)];
+        var url = 'url(https://polk.uwosh.edu/studentjobs/themes/images/scenes/' + bk + ')';
+        $('html').css('background-image', url);
+    },
+}
+Themer.init();
 
 
 var Formatter = {
