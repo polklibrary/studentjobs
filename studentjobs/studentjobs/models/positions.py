@@ -16,7 +16,7 @@ class Positions(Base,Model):
     
     id = Column(Integer, primary_key=True)
     name = Column(Unicode(55))
-    title = Column(Unicode(255))
+    title = Column(Text)
     
     def __init__(self, **kwargs):
         self.name = kwargs.get('name','')

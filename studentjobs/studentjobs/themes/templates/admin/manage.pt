@@ -22,8 +22,9 @@
             
             
             <div class="box">
-                <h2>Retention</h2>
-                <div>Applications kept for ${purge_days} days</div>‬
+                <h2>Retention Rules</h2>
+                <div>Applications kept for ${purge_days} days.</div>
+                <div tal:condition="request.can_admin" class="home-info">To change go to Manage Config.</div>
             </div>
         
             <div class="clear"></div>

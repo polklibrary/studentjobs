@@ -171,24 +171,17 @@
         
             <form id="search" >
             
+            
+                <h2>Quick Search</h2>
                 <div class="section">
                     <label for="search-name">Name</label>
                     <input id="search-name" type="text" name="search.name" value="" placeholder="John or Jane Doe" />   
-                </div>
-                
-                <div class="search-divider">
-                OR
-                </div>
-                
-                <div class="section">
+                    <span class="search-or"> OR </span>
                     <label for="search-email">Email</label>
                     <input id="search-email" type="text" name="search.email" value="" placeholder="doej32@uwosh.edu" />
                 </div>
                 
-                <div class="search-divider">
-                OR
-                </div>
-                
+                <h2>Advanced Search</h2>
                 <div class="section">
                 
                     <label for="search-work_study">Work Study Required</label>
@@ -303,15 +296,13 @@
                     <div class="clear"></div>
                 </div>
                 
-                <div class="section buttons">
+                <div class="buttons">
                     <input class="button green" type="submit" value="Search" name="search.submit" /> 
                 </div>
             </form>
         
-            <div class="break"></div>
-            <br />
-            <br />
-        
+            <div class="clear"></div>
+            
             <h2>All Applications</h2>
             <div id="manage-search-results">
                 <table id="manage-search-results-table" class="tablesorter dt-generic-style">
