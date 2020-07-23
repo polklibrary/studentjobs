@@ -12,7 +12,7 @@
         <form tal:condition="not: waiting_verify" id="login" method="post" action="${request.application_url}/login">
             <h3>Login</h3>
             <div>
-                <label>Email: <input type="text" name="email" value="" /></label>
+                <label>NetID: <input type="text" name="email" value="" /></label>
                 <label>Password: <input type="password" name="pass" value="" /></label>
                 <input type="hidden" name="code" value="" />
 
