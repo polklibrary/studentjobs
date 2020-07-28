@@ -1,5 +1,5 @@
 
-
+var RunTestData = null;
 var Main = {
     
     
@@ -10,6 +10,8 @@ var Main = {
         this.prevent_precise_address();
         this.block_form_enter();
        // this.tester();
+       
+        RunTestData = this.fill_test_data; // HOOK
     },
     
     make_random_str : function(l) {
