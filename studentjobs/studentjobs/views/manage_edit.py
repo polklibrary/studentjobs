@@ -2,6 +2,7 @@
 from studentjobs.security.acl import ACL
 from studentjobs.models import DBSession,Users
 from studentjobs.utilities.utility import has_interface
+from studentjobs.utilities.validators import Validators
 from studentjobs.views import BaseView
 from studentjobs.views.manage_data import ManageData,Import
 from pyramid.httpexceptions import HTTPFound
@@ -24,7 +25,7 @@ class ManageDataEdit(ManageData):
             for p in self.request.params:
                 name = p.replace('form.', '')  # all incoming form params are padding with this key
                 if hasattr(object, name) and filter(lambda d: name in d, table_class.__scaffold__): # safety check
-                    setattr(object, name, self.request.params.get(p))
+                    setattr(object, name, Validators.safe_text(self.request.params.get(p)))
             DBSession.flush()
             transaction.commit()
             if 'form.submit.list' in self.request.params:

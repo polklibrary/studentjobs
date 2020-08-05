@@ -4,6 +4,7 @@ from studentjobs.models import DBSession,Users
 from studentjobs.utilities.utility import has_interface
 from studentjobs.views import BaseView
 from studentjobs.views.manage_data import ManageData,Import
+from studentjobs.utilities.validators import Validators
 from pyramid.view import view_config
 import transaction
 

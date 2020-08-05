@@ -45,11 +45,11 @@ class ManageData(BaseView):
         html += ' name="form.' + name + '"'
         
         if element == 'input':
-            html += 'value="' + str(content) + '" />'  #close input and add value
+            html += 'value="' + Validators.safe_htmltext(str(content)) + '" />'  #close input and add value
         elif element == 'select':
             html += '>'
             for k,v in options.items():
-                html += '<option value="' + str(v) + '"'
+                html += '<option value="' + Validators.safe_htmltext(str(v)) + '"'
                 
                 if option_type == 'bool':
                     if Validators.bool(v) == content:
@@ -64,7 +64,7 @@ class ManageData(BaseView):
                 html += '>' + k + '</option>'
             html += '</' + element + '>'
         else:
-            html += '>' + str(content) + '</' + element + '>'
+            html += '>' + Validators.safe_htmltext(str(content)) + '</' + element + '>'
         return html
         
     def _create_form_label(self, name, label):

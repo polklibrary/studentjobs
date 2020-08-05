@@ -45,6 +45,21 @@ class Validators(object):
         
         
     @classmethod
+    def safe_text(cls,text):
+        """ Safe text for saving into database """
+        text = text.replace(u"\u2018", u"'").replace(u"\u2019", u"'")
+        text = text.replace(u"\u201c", u'"').replace(u"\u201d", u'"')
+        text = text.replace(u"\u2013", u'-')
+        return text.encode('ascii', errors='ignore')
+        
+    @classmethod
+    def safe_htmltext(cls, text):
+        """ Safe text for saving into database """        
+        text = text.replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+        return text
+        
+        
+    @classmethod
     def is_acl(cls,group):
         group = cls.sanatize_textsafe(group)
         return group == 'Administrator' or group == 'Anonymous' or group == 'Reviewer' or group == 'Authenticated'
