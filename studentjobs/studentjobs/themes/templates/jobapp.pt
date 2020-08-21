@@ -90,7 +90,7 @@
                 <div class="break"></div>
                 
                 
-                <b>Location and Position to apply for:</b>
+                <b>Location and Position to apply for:</b> <span class="hover-help">(Hover over position for position description)</span>
                 <div class="clear"></div>
                 
                 <tal:block repeat="position positions">

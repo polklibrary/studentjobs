@@ -247,6 +247,12 @@ textarea {
     cursor: help;
 }
 
+.hover-help{
+    font-style: italic;
+    color: #666;
+    font-size: 13px;
+}
+
 
 /* LOGIN ===================================================================== */
 
