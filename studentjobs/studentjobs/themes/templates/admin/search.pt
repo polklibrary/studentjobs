@@ -89,6 +89,7 @@
                         'search.positions.andor': $('select[name="search.positions.andor"]>option:selected').val(),
                         'search.positions': '',
                         'search.address': $('#search-address').val(),
+                        'search.availability.andor': $('select[name="search.availability.andor"]>option:selected').val(),
                     }
                     
                     // Positions Query
@@ -197,8 +198,9 @@
                    
                     <h3 class="search-availability">Availability
                         <select name="search.availability.andor" title="How to join 'Availability' below.">
-                            <option value="and">and</option>
-                            <option value="or">or</option>
+                            <option value="and" title="Joins availability with boolean AND">and</option>
+                            <option value="or" title="Joins availability with boolean OR">or</option>
+                            <option value="all" title="Show all results (ignores any availability selected)">all</option>
                         </select>
                     </h3>
                     <div class="time-picker">
@@ -294,6 +296,7 @@
                     <b>Home Address</b>
                     <input id="search-address" type="text" name="search.address" value="" placeholder="optional" />
                     <div class="clear"></div>
+                    
                 </div>
                 
                 <div class="buttons">

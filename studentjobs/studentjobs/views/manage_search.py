@@ -71,20 +71,22 @@ class ManageSearch(BaseView):
 
             # Day And Time Check
             availability_andor = self.request.params.get('search.availability.andor','and')
-            clauses_daytime = []
-            for i in range(0,10):
-                times = self.time_range_creator(self.request.params.get('search.time.' + str(i),''))
-                days = self.request.params.get('search.day.' + str(i), '').split(',')
-                if times:
-                    for day in days:
-                        if day:
-                            clauses_daytime.append( getattr(Applications, day.lower() + '_availability').like('%' + times + '%') )
-            if clauses_daytime: 
-                if availability_andor == 'or':
-                    query = query.filter(or_(*clauses_daytime))
-                else:
-                    query = query.filter(and_(*clauses_daytime))
-                
+            if availability_andor != 'all':
+                print "Limit Day Time"
+                clauses_daytime = []
+                for i in range(0,10):
+                    times = self.time_range_creator(self.request.params.get('search.time.' + str(i),''))
+                    days = self.request.params.get('search.day.' + str(i), '').split(',')
+                    if times:
+                        for day in days:
+                            if day:
+                                clauses_daytime.append( getattr(Applications, day.lower() + '_availability').like('%' + times + '%') )
+                if clauses_daytime: 
+                    if availability_andor == 'or':
+                        query = query.filter(or_(*clauses_daytime))
+                    elif availability_andor == 'and':
+                        query = query.filter(and_(*clauses_daytime))
+            
                 
         if query:
             count = query.count() # get total number of records
