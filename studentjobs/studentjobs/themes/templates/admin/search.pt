@@ -10,6 +10,7 @@
     </tal:block>
     
     <tal:block metal:fill-slot="js">
+    
         <script>
             $(document).ready(function(){
             
